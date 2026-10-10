@@ -47,7 +47,7 @@
 // TIMING AND PERFORMANCE
 // ============================================================================
 #define SENSOR_SUPPORT_15FPS_SCLK (72000000)
-#define SENSOR_OUTPUT_MAX_FPS 15
+#define SENSOR_OUTPUT_MAX_FPS 30
 #define SENSOR_OUTPUT_MIN_FPS 5
 
 static int reset_gpio = GPIO_PA(16);
@@ -762,9 +762,6 @@ static int sensor_set_fps(struct tx_isp_subdev *sd, int fps)
 	unsigned char val = 0;
 	unsigned int newformat = 0; // the format is 24.8
 	int ret = 0;
-
-	ISP_WARNING("[%s %d] Frame rate setting is not supported !!!\n", __func__, __LINE__);
-	return 0;
 
 	newformat = (((fps >> 16) / (fps & 0xffff)) << 8) + ((((fps >> 16) % (fps & 0xffff)) << 8) / (fps & 0xffff));
 	if (newformat > (SENSOR_OUTPUT_MAX_FPS << 8) || newformat < (SENSOR_OUTPUT_MIN_FPS << 8)) {
